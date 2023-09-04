@@ -1,0 +1,184 @@
+<div
+  class="d-flex justify-content-between fles-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">New Employee</h1>
+</div>
+<div class="col py-3">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+          <li class="breadcrumb-item active">New Employee</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<form action="/add" method="POST">
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="firstName">First Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        name="firstName"
+        value=""
+        placeholder="First Name"
+        
+      />
+    </div>
+
+    <div class="col">
+      <label for="lastName">Last Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lastName"
+        name="lastName"
+        value=""
+        placeholder="Last Name"
+        
+      />
+    </div>
+  </div>
+
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="tel">Phone No.</label>
+      <input
+        type="text"
+        class="form-control"
+        id="tel"
+        name="tel"
+        value=""
+        placeholder="Telephone"
+        
+      />
+    </div>
+
+    <div class="col">
+      <label for="address">Designation</label>
+      <input
+        type="text"
+        class="form-control"
+        id="designation"
+        name="designation"
+        value=""
+        placeholder="Designation"
+        
+      />
+    </div>
+  </div>
+
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="email">Email</label>
+      <input
+        type="text"
+        class="form-control"
+        id="email"
+        name="email"
+        value=""
+        placeholder="Email"
+        
+      />
+    </div>
+
+    <div class="col">
+      <label for="credentials">Credentials</label>
+      <input
+        type="text"
+        class="form-control"
+        id="credentials"
+        name="credentials"
+        value=""
+        placeholder="Credentials"
+        
+      />
+    </div>
+  </div>
+
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="dept">Department</label>
+      <input
+        type="text"
+        class="form-control"
+        id="dept"
+        name="dept"
+        value=""
+        placeholder="Department"
+        
+      />
+    </div>
+
+    <div class="col">
+      <label for="handover">Handover Form</label>
+      <input
+        type="file"
+        class="form-control"
+        id="handover"
+        name="handover"
+        value=""
+        placeholder="Handover Form"
+        accept="application/pdf"
+      />
+    </div>
+  </div>
+  <div>
+    <div class="row form-group mb-4">
+      <div class="col">
+        <label for="device">Devices</label>
+        <div id="input-cont">
+          <!-- Input container -->
+        </div>
+        <button onclick="addDevices()" class="btn-outline-secondary btn">
+          Add Devices
+        </button>
+
+        <script>
+          const container = document.getElementById("input-cont");
+
+          // Call addDevices() function on button click
+          function addDevices() {
+            let dropdown = document.createElement("select");
+            dropdown.classList.add("form-control");
+            let option1 = document.createElement("option");
+            option1.text = "Laptop";
+            let option2 = document.createElement("option");
+            option2.text = "Desktop";
+            let option3 = document.createElement("option");
+            option3.text = "Printer";
+            dropdown.appendChild(option1);
+            dropdown.appendChild(option2);
+            dropdown.appendChild(option3);
+            container.appendChild(dropdown);
+
+            let input = document.createElement("input");
+            input.classList.add("form-control");
+            input.placeholder = "Device ID";
+            container.appendChild(input);
+          }
+        </script>
+      </div>
+      <div class="col">
+        <label for="dept">Antivirus</label>
+      <input
+        type="checkbox"
+        class="form-control"
+        id="dept"
+        name="dept"
+        value=""        
+      />
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group mb-4">
+    <button type="submit" class="btn btn-primary">Add Employee</button>
+  </div>
+</form>
+
