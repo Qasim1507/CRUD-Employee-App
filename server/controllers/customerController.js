@@ -1,15 +1,20 @@
 const User = require('../models/User');
+const Credential = require('../models/Credentialdata');
 const mongoose = require('mongoose');
-const cloudinary = require('cloudinary');
 
-cloudinary.config({
-  cloud_name: 'dnciu5igz',
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET,
-  secure:true
-});
 
-console.log(cloudinary.config());
+exports.login = async (req, res) => {
+  const locals = {
+    title: 'Login',
+    description: 'Free NodeJs User Management System'
+  }
+
+  try {
+    res.render('login', locals );
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 /**
  * GET /
@@ -48,6 +53,74 @@ exports.homepage = async (req, res) => {
     //res.render('index',locals);
 }
 
+exports.credentialdata = async (req, res) => {
+  const locals={
+    title: 'NODE JS',
+    description: 'NODEJS TRIAL'
+}
+
+let perPage = 10;
+let page = req.query.page || 1; 
+
+try {
+    const credentials = await Credential.aggregate([ { $sort: { createdAt: -1 } } ])
+    .skip(perPage * page - perPage)
+    .limit(perPage)
+    .exec(); 
+  const count = await Credential.count();
+
+  res.render('credentialdata', {
+    locals,
+    credentials,
+    current: page,
+    pages: Math.ceil(count / perPage)
+  });
+
+} catch (error) {
+    console.log(error)
+}
+}
+
+
+/**
+ * GET /
+ * New User Form
+ */
+exports.addCredentials = async (req, res) => {
+  const locals = {
+    title: "Add New Credential - NodeJs",
+    description: "Free NodeJs User Management System",
+  };
+
+  res.render("user/addcred", locals);
+};
+
+/**
+ * POST /
+ * Create New User Form
+ */
+exports.postCredentials = async (req, res) => {
+
+  console.log(req.body);
+  // cloudinary.uploader
+  // .upload('../text.txt')
+  // .then(result=>console.log(result));
+
+  const newCredential = new Credential({
+    userid:req.body.userid,
+    pwd:req.body.pwd,
+    url:req.body.url,
+    remarks:req.body.remarks
+  })
+  try {
+    await Credential.create(newCredential);
+    //await req.flash('info','New Employee has been added');
+    res.redirect('/cred');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 /**
  * GET /
  * New User Form
@@ -67,29 +140,29 @@ exports.addUser = async (req, res) => {
  */
 exports.postUser = async (req, res) => {
 
-    console.log(req.body);
-    cloudinary.uploader
-    .upload('../text.txt')
-    .then(result=>console.log(result));
+    // console.log(req.body);
+    // cloudinary.uploader
+    // .upload('../text.txt')
+    // .then(result=>console.log(result));
 
-    // const newUser = new User({
-    //     firstName:req.body.firstName,
-    //     lastName:req.body.lastName,
-    //     tel:req.body.tel,
-    //     designation:req.body.designation,
-    //     email:req.body.email,
-    //     credentials:req.body.credentials,
-    //     dept:req.body.dept,
-    //     handover:req.body.handover,
-    // });
+    const newUser = new User({
+        firstName:req.body.firstName,
+        lastName:req.body.lastName,
+        tel:req.body.tel,
+        designation:req.body.designation,
+        email:req.body.email,
+        credentials:req.body.credentials,
+        dept:req.body.dept,
+        handover:req.body.handover,
+    });
 
-    // try {
-    //     await User.create(newUser);
-    //     //await req.flash('info','New Employee has been added');
-    //     res.redirect('/');
-    // } catch (error) {
-    //     console.log(error);
-    // }  
+    try {
+        await User.create(newUser);
+        //await req.flash('info','New Employee has been added');
+        res.redirect('/dashboard');
+    } catch (error) {
+        console.log(error);
+    }  
 };
 
 /**
@@ -113,6 +186,29 @@ exports.view = async (req, res) => {
     } catch (error) {
       console.log(error);
     }
+}
+
+/**
+ * View User Data
+ */
+exports.viewcredential = async (req, res) => {
+
+  try {
+    const credentials = await Credential.findOne({ _id: req.params.id })
+
+    const locals = {
+      title: "View Credential Data",
+      description: "Free NodeJs User Management System",
+    };
+
+    res.render('user/viewcred', {
+      locals,
+      credentials
+    })
+
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 /**
@@ -171,9 +267,17 @@ exports.editemp = async (req, res) => {
 exports.deleteUser = async (req, res) => {
     try {
       await User.deleteOne({ _id: req.params.id });
-      res.redirect("/");
+      res.redirect("/dashboard");
     } catch (error) {
       console.log(error);
     }
-  }
+}
   
+exports.deleteCredentials = async (req, res) => {
+  try {
+    await Credential.deleteOne({ _id: req.params.id });
+    res.redirect("/cred");
+  } catch (error) {
+    console.log(error);
+  }
+}

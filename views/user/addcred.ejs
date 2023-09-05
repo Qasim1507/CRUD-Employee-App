@@ -1,0 +1,71 @@
+<div
+  class="d-flex justify-content-between fles-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">New Credentials</h1>
+</div>
+<div class="col py-3">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/cred">Credential Data</a></li>
+          <li class="breadcrumb-item active">Credential Data</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<form action="/addcred" method="POST">
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="userid">User ID</label>
+      <input
+        type="text"
+        class="form-control"
+        id="userid"
+        name="userid"
+        value=""
+        placeholder="User ID"
+        
+      />
+    </div>
+
+    <div class="col">
+      <label for="pwd">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="pwd"
+        name="pwd"
+        value=""
+        placeholder="Password"
+        
+      />
+    </div>
+  </div>
+
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="url">URL</label>
+      <input
+        type="url"
+        class="form-control"
+        id="url"
+        name="url"
+        value=""
+        placeholder="URL"
+        
+      />
+    </div>
+
+    <div class="form-group mb-4">
+        <label for="remarks">Remarks</label>
+        <textarea class="form-control" name="remarks" id="remarks" cols="30" rows="10" placeholder="Remarks"></textarea>
+    </div>
+
+  <div class="form-group mb-4">
+    <button type="submit" class="btn btn-primary">Add Credential</button>
+  </div>
+</form>
+
