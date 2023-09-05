@@ -21,29 +21,28 @@ router.delete('/cred/:id', customerController.deleteCredentials);
 
 let fileUpload = multer()
 router.post("/upload",fileUpload.single("My file"), async (req,res)=>{
-  try {
-      if(!req.file)
-          return res.status(400).json({message:"Insert file"});
+    let streamUpload = (req) => {
+        return new Promise((resolve, reject) => {
+            let stream = cloudinary.uploader.upload_stream(
+              (error, result) => {
+                if (result) {
+                  resolve(result);
+                } else {
+                  reject(error);
+                }
+              }
+            );
 
-      console.log(req.file);
-      let uploadedFile = UploadApiResponse;
-      uploadedFile = await cloudinary.uploader.upload('./'+req.filename,function(res,err){
-          console.log(res,err)
-      })
-      const {originalname} = req.file
-      const {secure_url,bytes,format} = uploadedFile
-      
-      const file = await File.create({
-          filename:originalname,
-          sizeInBytes:bytes,
-          secure_url,
-          format
-      });
-      res.status(200).json(file);
-  } catch (error) {
-      console.log(error.message);
-      res.status(500).json({message:"Server error"})
-  }
+          streamifier.createReadStream(req.file.buffer).pipe(stream);
+        });
+    };
+
+    async function upload(req) {
+        let result = await streamUpload(req);
+        console.log(result);
+    }
+
+    upload(req);
 })
 
 module.exports = router;

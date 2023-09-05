@@ -153,7 +153,7 @@ exports.postUser = async (req, res) => {
         email:req.body.email,
         credentials:req.body.credentials,
         dept:req.body.dept,
-        handover:req.body.handover,
+        handover:req.body.handover
     });
 
     try {
