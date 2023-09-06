@@ -86,3 +86,7 @@ router.post("/upload",upload.single("My file"), async (req,res)=>{
         res.status(500).json({message:"Server error"})
     }
 })
+
+<a href="/viewcred/<%= element._id %>" type="button" class="btn btn-primary btn-small">
+  <i class="bi bi-eye"></i>
+</a>

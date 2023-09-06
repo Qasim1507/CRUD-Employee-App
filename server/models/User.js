@@ -32,8 +32,16 @@ const UserSchema = new Schema({
     },
     handover:{
         type:String,
-        required:true
-    }
+        required:false
+    },
+    antivirus:{
+        type:String,
+        required:false
+    },
+    devices:[{
+        DeviceType:{type:String},
+        DeviceID:{type:String}
+    }]
 });
 
 module.exports = mongoose.model('User',UserSchema);

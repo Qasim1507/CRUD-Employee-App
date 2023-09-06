@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-const CredentailSchema = new Schema({
+const CredentialSchema = new Schema({
     userid:{
         type:String,
         required: true
@@ -20,4 +20,4 @@ const CredentailSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('Credential',CredentailSchema);
+module.exports = mongoose.model('Credential',CredentialSchema);

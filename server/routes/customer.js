@@ -21,7 +21,7 @@ router.delete('/cred/:id', customerController.deleteCredentials);
 
 let fileUpload = multer()
 router.post("/upload",fileUpload.single("My file"), async (req,res)=>{
-    let streamUpload = (req) => {
+      let streamUpload = (req) => {
         return new Promise((resolve, reject) => {
             let stream = cloudinary.uploader.upload_stream(
               (error, result) => {
@@ -40,8 +40,8 @@ router.post("/upload",fileUpload.single("My file"), async (req,res)=>{
     async function upload(req) {
         let result = await streamUpload(req);
         console.log(result);
+        return result.url;
     }
-
     upload(req);
 })
 

@@ -90,7 +90,7 @@
     <div class="col">
       <label for="credentials">Credentials</label>
       <input
-        type="password"
+        type="text"
         class="form-control"
         id="credentials"
         name="credentials"
@@ -114,7 +114,6 @@
         
       />
     </div>
-
     <div class="col">
       <label for="handover">Handover Form</label>
       <input
@@ -127,6 +126,7 @@
         accept="application/pdf"
       />
     </div>
+
   </div>
     <div class="row form-group mb-4">
       <div class="col">
@@ -140,10 +140,15 @@
 
         <script>
           const container = document.getElementById("input-cont");
+          let deviceCount = 0;
 
           function addDevices() {
+            let deviceContainer = document.createElement("div");
+            deviceContainer.classList.add("device-container");
+
             let dropdown = document.createElement("select");
             dropdown.classList.add("form-control");
+            dropdown.name = `devices[${deviceCount}].DeviceType`;
             let option1 = document.createElement("option");
             option1.text = "Laptop";
             let option2 = document.createElement("option");
@@ -153,26 +158,28 @@
             dropdown.appendChild(option1);
             dropdown.appendChild(option2);
             dropdown.appendChild(option3);
-            container.appendChild(dropdown);
+            deviceContainer.appendChild(dropdown);
 
             let input = document.createElement("input");
             input.classList.add("form-control");
             input.placeholder = "Device ID";
-            container.appendChild(input);
+            input.name = `devices[${deviceCount}].DeviceID`;
+            deviceContainer.appendChild(input);
+
+            container.appendChild(deviceContainer);
+
+            deviceCount++;
           }
         </script>
       </div>
       <div class="col">
         <label for="antivirus">Antivirus</label>
         <br/>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-          <label class="form-check-label" for="inlineRadio1">Yes</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-          <label class="form-check-label" for="inlineRadio2">No</label>
-        </div>
+        <input class="form-control" list="antivirus" name="antivirus">
+          <datalist id="antivirus">
+            <option value="Yes">
+            <option value="No">
+          </datalist>
       </div>
     </div>
 

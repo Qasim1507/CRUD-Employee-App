@@ -1,6 +1,11 @@
 const User = require('../models/User');
 const Credential = require('../models/Credentialdata');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const express = require('express');
+const router = express.Router();
+const cloudinary = require("cloudinary").v2;
+const streamifier = require('streamifier');
 
 
 exports.login = async (req, res) => {
@@ -10,7 +15,8 @@ exports.login = async (req, res) => {
   }
 
   try {
-    res.render('login', locals );
+    console.log(req.oidc.isAuthenticated())
+    res.render('login', { locals,isAuthenticated:req.oidc.isAuthenticated() } );
   } catch (error) {
     console.log(error);
   }
@@ -153,9 +159,14 @@ exports.postUser = async (req, res) => {
         email:req.body.email,
         credentials:req.body.credentials,
         dept:req.body.dept,
-        handover:req.body.handover
+        handover:req.body.handover,        
+        devices:[{
+          DeviceType:req.body.DeviceType,
+          DeviceID:req.body.DeviceID
+        }],        
+        antivirus:req.body.antivirus,
     });
-
+    
     try {
         await User.create(newUser);
         //await req.flash('info','New Employee has been added');

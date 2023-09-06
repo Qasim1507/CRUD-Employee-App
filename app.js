@@ -12,18 +12,18 @@ const { auth } = require('express-openid-connect');
 
 const app = express();
 const port = 5000 || process.env.PORT;
-// const config = {
-//   authRequired: false,
-//   auth0Logout: true,
-//   secret: process.env.AUTH0_SECRET,
-//   baseURL: process.env.AUTH0_BASEURL,
-//   clientID: process.env.AUTH0_CLIENTID,
-//   issuerBaseURL: process.env.AUTH0_ISSUEBASEURL
-// };
+const config = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: process.env.AUTH0_SECRET,
+  baseURL: process.env.AUTH0_BASEURL,
+  clientID: process.env.AUTH0_CLIENTID,
+  issuerBaseURL: process.env.AUTH0_ISSUEBASEURL
+};
 
 connectDB();
 
-//app.use(auth(config));
+app.use(auth(config));
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(methodoverrride('_method'));
@@ -69,6 +69,11 @@ cloudinary.config({
 // Handle 404
 app.get('*', (req, res) => {
     res.status(404).render('404');
+});
+
+//Auht0
+app.get('/', (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
 app.listen(port,() =>{
