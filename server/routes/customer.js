@@ -5,7 +5,7 @@ const customerController = require('../controllers/customerController');
 const cloudinary = require("cloudinary").v2;
 const streamifier = require('streamifier');
 
-router.get('/', customerController.login);
+router.get('/', customerController.homepage);
 router.get('/dashboard',customerController.homepage);
 router.get('/cred',customerController.credentialdata);
 router.get('/add',customerController.addUser);
