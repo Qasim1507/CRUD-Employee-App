@@ -47,6 +47,11 @@ app.use(
     })
 );
 
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.oidc.isAuthenticated();
+  next();
+});
+
 app.use(expressLayout);
 app.set('layout','./layouts/main');
 app.set('view engine','ejs');
@@ -72,9 +77,14 @@ app.get('*', (req, res) => {
 });
 
 //Auht0
-app.get('/', (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-});
+// app.get('/', (req, res) => {
+//   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+// });
+
+// app.use((req, res, next) => {
+//   res.locals.isAuthenticated = req.oidc.isAuthenticated();
+//   next();
+// });
 
 app.listen(port,() =>{
     console.log(`App listening on port ${port}`)

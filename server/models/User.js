@@ -39,8 +39,12 @@ const UserSchema = new Schema({
         required:false
     },
     devices:[{
-        DeviceType:{type:String},
-        DeviceID:{type:String}
+        DeviceType:{
+            type:String
+        },
+        DeviceID:{
+            type:String
+        }
     }]
 });
 

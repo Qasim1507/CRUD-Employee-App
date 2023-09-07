@@ -146,11 +146,6 @@ exports.addUser = async (req, res) => {
  */
 exports.postUser = async (req, res) => {
 
-    // console.log(req.body);
-    // cloudinary.uploader
-    // .upload('../text.txt')
-    // .then(result=>console.log(result));
-
     const newUser = new User({
         firstName:req.body.firstName,
         lastName:req.body.lastName,
