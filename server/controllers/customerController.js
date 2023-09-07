@@ -35,7 +35,7 @@ exports.homepage = async (req, res) => {
         description: 'NODEJS TRIAL'
     }
 
-    let perPage = 10;
+    let perPage = 9;
     let page = req.query.page || 1; 
 
     try {
@@ -65,7 +65,7 @@ exports.credentialdata = async (req, res) => {
     description: 'NODEJS TRIAL'
 }
 
-let perPage = 10;
+let perPage = 8;
 let page = req.query.page || 1; 
 
 try {

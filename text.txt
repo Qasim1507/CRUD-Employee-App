@@ -90,3 +90,27 @@ router.post("/upload",upload.single("My file"), async (req,res)=>{
 <a href="/viewcred/<%= element._id %>" type="button" class="btn btn-primary btn-small">
   <i class="bi bi-eye"></i>
 </a>
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pl-3 pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2 ">SAMCOM ADMIN PORTAL</h1>
+</div>
+
+<section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+          class="img-fluid" alt="Sample image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <a href="/login" type="button" class="btn btn-danger btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</a>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+https://images.unsplash.com/photo-1528312635006-8ea0bc49ec63?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1800&q=80
