@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<form action="/add" method="POST">
+<form action="/add" method="POST" enctype="multipart/form-data">
   <div class="row form-group mb-4">
     <div class="col">
       <label for="firstName">First Name</label>
@@ -113,7 +113,7 @@
         type="file"
         class="form-control"
         id="handover"
-        name="handover"
+        name="file"
         value=""
         placeholder="Handover Form"
         accept="application/pdf"
@@ -134,14 +134,14 @@
         <script>
           const container = document.getElementById("input-cont");
           let deviceCount = 0;
-        
+    
           function addDevices() {
             let deviceContainer = document.createElement("div");
             deviceContainer.classList.add("device-container");
-        
+    
             let dropdown = document.createElement("select");
             dropdown.classList.add("form-control");
-            dropdown.name = `devices[${deviceCount}].DeviceType`;
+            dropdown.name = `devices[${deviceCount}][DeviceType]`;
             let option1 = document.createElement("option");
             option1.text = "Laptop";
             let option2 = document.createElement("option");
@@ -152,15 +152,15 @@
             dropdown.appendChild(option2);
             dropdown.appendChild(option3);
             deviceContainer.appendChild(dropdown);
-        
+    
             let input = document.createElement("input");
             input.classList.add("form-control");
             input.placeholder = "Device ID";
-            input.name = `devices[${deviceCount}].DeviceID`;
+            input.name = `devices[${deviceCount}][DeviceID]`;
             deviceContainer.appendChild(input);
-        
+    
             container.appendChild(deviceContainer);
-        
+    
             deviceCount++;
           }
         </script>

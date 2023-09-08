@@ -11,7 +11,7 @@ const cloudinary = require("cloudinary").v2;
 const { auth } = require('express-openid-connect');
 
 const app = express();
-const port = 5000 || process.env.PORT;
+const port = 5100 || process.env.PORT;
 const config = {
   authRequired: false,
   auth0Logout: true,

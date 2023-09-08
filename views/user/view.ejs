@@ -63,7 +63,9 @@
     <li class="list-group-item"> 
       <div class="row">
         <div class="col" style="max-width: 140px"> <b>Handover Form:</b></div>
-        <div class="col"><%= users.handover %></div>
+        <div class="col">
+          <a href="<%= users.handover %>">
+          <%= users.handover %></a></div>
       </div>
     </li>
 
@@ -74,13 +76,17 @@
       </div>
     </li>
 
-    <li class="list-group-item"> 
+    <li class="list-group-item">
       <div class="row">
-        <div class="col" style="max-width: 140px"> <b>Devices:</b></div>
-        <% users.devices.forEach(function(device) { %>
-          <div class="col"><%= device.DeviceType %> <%= device.DeviceID %></div>
-        <% }); %>
+        <div class="col" style="max-width: 140px"><b>Devices:</b></div>
+        <div class="col">
+          <ul>
+            <% for (let i = 0; i < users.devices.length; i++) { %>
+              <li><%= users.devices[i].DeviceType %> : <%= users.devices[i].DeviceID %></li>
+            <% } %>
+          </ul>
+        </div>
       </div>
     </li>
-  
-  </ul>
+    
+</ul>

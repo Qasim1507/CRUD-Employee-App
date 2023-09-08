@@ -145,6 +145,14 @@ exports.addUser = async (req, res) => {
  * Create New User Form
  */
 exports.postUser = async (req, res) => {
+    const devices = [];
+    for (let i = 0; i < req.body.devices.length; i++) {
+      const newDevice = {
+        DeviceType: req.body.devices[i].DeviceType,
+        DeviceID: req.body.devices[i].DeviceID,
+      };
+      devices.push(newDevice);
+    }
 
     const newUser = new User({
         firstName:req.body.firstName,
@@ -155,10 +163,7 @@ exports.postUser = async (req, res) => {
         credentials:req.body.credentials,
         dept:req.body.dept,
         handover:req.body.handover,        
-        devices:[{
-          DeviceType:req.body.DeviceType,
-          DeviceID:req.body.DeviceID
-        }],        
+        devices:devices,        
         antivirus:req.body.antivirus,
     });
     
