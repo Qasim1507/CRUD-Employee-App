@@ -18,7 +18,7 @@
   </div>
 </div>
 
-<form action="/edit/<%= users._id %>?_method=PUT" method="POST">
+<form action="/edit/<%=users._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
   <div class="row form-group mb-4">
     <div class="col">
       <label for="firstName">First Name</label>
@@ -27,8 +27,8 @@
         class="form-control"
         id="firstName"
         name="firstName"
-        value="<%= users.firstName %>"
-        placeholder="First Name"
+        value=""
+        placeholder="<%= users.firstName %>"
       />
     </div>
 
@@ -39,8 +39,8 @@
         class="form-control"
         id="lastName"
         name="lastName"
-        value="<%= users.lastName %>"
-        placeholder="Last Name"
+        value=""
+        placeholder="<%= users.lastName %>"
       />
     </div>
   </div>
@@ -53,8 +53,8 @@
         class="form-control"
         id="tel"
         name="tel"
-        value="<%= users.tel %>"
-        placeholder="Telephone"
+        value=""
+        placeholder="<%= users.tel %>"
       />
     </div>
 
@@ -65,8 +65,8 @@
         class="form-control"
         id="designation"
         name="designation"
-        value="<%= users.designation %>"
-        placeholder="Designation"
+        value=""
+        placeholder="<%= users.designation %>"
       />
     </div>
   </div>
@@ -79,8 +79,8 @@
         class="form-control"
         id="email"
         name="email"
-        value="<%= users.email %>"
-        placeholder="Email"
+        value=""
+        placeholder="<%= users.email %>"
       />
     </div>
 
@@ -91,8 +91,8 @@
         class="form-control"
         id="credentials"
         name="credentials"
-        value="<%= users.credentials %>"
-        placeholder="Credentials"
+        value=""
+        placeholder="<%= users.credentials %>"
       />
     </div>
   </div>
@@ -105,42 +105,45 @@
         class="form-control"
         id="dept"
         name="dept"
-        value="<%= users.dept %>"
-        placeholder="Department"
+        value=""
+        placeholder="<%= users.dept %>"
       />
     </div>
-
     <div class="col">
       <label for="handover">Handover Form</label>
       <input
         type="file"
         class="form-control"
         id="handover"
-        name="handover"
-        value="<%= users.handover %>"
-        placeholder="Handover Form"
+        name="file"
+        value=""
+        placeholder="<%= users.handover %>"
         accept="application/pdf"
       />
     </div>
+
   </div>
-  <div>
     <div class="row form-group mb-4">
       <div class="col">
         <label for="device">Devices</label>
         <div id="input-cont">
           <!-- Input container -->
         </div>
-        <button onclick="addDevices()" class="btn-outline-secondary btn">
-          Add Devices
-        </button>
+        <div onclick="addDevices()" class="btn-outline-secondary btn">
+          + Add Devices
+        </div>
 
         <script>
           const container = document.getElementById("input-cont");
-
-          // Call addDevices() function on button click
+          let deviceCount = 0;
+    
           function addDevices() {
+            let deviceContainer = document.createElement("div");
+            deviceContainer.classList.add("device-container");
+    
             let dropdown = document.createElement("select");
             dropdown.classList.add("form-control");
+            dropdown.name = `devices[${deviceCount}][DeviceType]`;
             let option1 = document.createElement("option");
             option1.text = "Laptop";
             let option2 = document.createElement("option");
@@ -150,56 +153,32 @@
             dropdown.appendChild(option1);
             dropdown.appendChild(option2);
             dropdown.appendChild(option3);
-            container.appendChild(dropdown);
-
+            deviceContainer.appendChild(dropdown);
+    
             let input = document.createElement("input");
             input.classList.add("form-control");
             input.placeholder = "Device ID";
-            container.appendChild(input);
+            input.name = `devices[${deviceCount}][DeviceID]`;
+            deviceContainer.appendChild(input);
+    
+            container.appendChild(deviceContainer);
+    
+            deviceCount++;
           }
         </script>
+        
       </div>
       <div class="col">
         <label for="antivirus">Antivirus</label>
         <br/>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-          <label class="form-check-label" for="inlineRadio1">Yes</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-          <label class="form-check-label" for="inlineRadio2">No</label>
-        </div>
+        <input class="form-control" list="antivirus" name="antivirus" placeholder="<%= users.antivirus %>">
+          <datalist id="antivirus">
+            <option value="Yes">
+            <option value="No">
+          </datalist>
       </div>
     </div>
-  </div>
 
   <div class="form-group mb-4">
     <button type="submit" class="btn btn-primary">Update Employee</button>
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-      Delete Employee
-    </button>
-  </div>
 </form>
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">You are about to remove an employee record</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>
-          This will remove the employee record of this employee
-          <br />
-          Are you sure?
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <form action="/edit/<%= users._id %>?_method=DELETE" method="POST" class="position-relative">
-        <button type="button" class="btn btn-danger">Confirm</button>
-      </div>
-    </div>
-  </div>
-</div>

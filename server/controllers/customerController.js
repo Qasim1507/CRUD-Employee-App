@@ -276,12 +276,22 @@ exports.editemp = async (req, res) => {
  * Delete Customer Data 
 */
 exports.deleteUser = async (req, res) => {
-    try {
-      await User.deleteOne({ _id: req.params.id });
-      res.redirect("/dashboard");
-    } catch (error) {
-      console.log(error);
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+
+    // Delete the file from Cloudinary
+    if (user.image && user.image.public_id) {
+      // Delete the file from Cloudinary
+      await cloudinary.uploader.destroy(user.image.public_id);
     }
+
+    // Delete the user from the database
+    await User.deleteOne({ _id: req.params.id });
+
+    res.redirect("/dashboard");
+  } catch (error) {
+    console.log(error);
+  }
 }
   
 exports.deleteCredentials = async (req, res) => {
