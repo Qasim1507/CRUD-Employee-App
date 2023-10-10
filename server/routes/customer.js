@@ -1,31 +1,31 @@
-const multer = require('multer');
-const express = require('express');
+const multer = require("multer");
+const express = require("express");
 const router = express.Router();
-const customerController = require('../controllers/customerController');
+const customerController = require("../controllers/customerController");
 const cloudinary = require("cloudinary").v2;
-const streamifier = require('streamifier');
-const User = require('../models/User');
+const streamifier = require("streamifier");
+const User = require("../models/User");
 
-router.get('/', customerController.homepage);
-router.get('/dashboard',customerController.homepage);
-router.get('/cred',customerController.credentialdata);
-router.get('/add',customerController.addUser);
-router.get('/addcred',customerController.addCredentials);
+router.get("/", customerController.homepage);
+router.get("/dashboard", customerController.homepage);
+router.get("/cred", customerController.credentialdata);
+router.get("/add", customerController.addUser);
+router.get("/addcred", customerController.addCredentials);
 //router.post('/add',customerController.postUser);
-router.post('/addcred',customerController.postCredentials);
-router.get('/view/:id',customerController.view);
-router.get('/viewcred/:id',customerController.viewcredential);
-router.get('/edit/:id',customerController.edit);
-router.put('/edit/:id',customerController.editemp);
-router.delete('/edit/:id', customerController.deleteUser);
-router.delete('/cred/:id', customerController.deleteCredentials);
+router.post("/addcred", customerController.postCredentials);
+router.get("/view/:id", customerController.view);
+router.get("/viewcred/:id", customerController.viewcredential);
+router.get("/edit/:id", customerController.edit);
+router.put("/edit/:id", customerController.editemp);
+router.delete("/edit/:id", customerController.deleteUser);
+router.delete("/cred/:id", customerController.deleteCredentials);
 
 // customercontroller.js
 
 const fileUpload = multer();
 
 router.post("/add", fileUpload.single("file"), async (req, res) => {
-    const uploadImage = new Promise((resolve, reject) => {
+  const uploadImage = new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream((error, result) => {
       if (result) {
         resolve(result.url);
@@ -47,7 +47,6 @@ router.post("/add", fileUpload.single("file"), async (req, res) => {
       };
       devices.push(newDevice);
     }
-
 
     const newUser = new User({
       firstName: req.body.firstName,
@@ -72,5 +71,3 @@ router.post("/add", fileUpload.single("file"), async (req, res) => {
 });
 
 module.exports = router;
-
-

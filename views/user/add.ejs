@@ -119,66 +119,63 @@
         accept="application/pdf"
       />
     </div>
-
   </div>
-    <div class="row form-group mb-4">
-      <div class="col">
-        <label for="device">Devices</label>
-        <div id="input-cont">
-          <!-- Input container -->
-        </div>
-        <div onclick="addDevices()" class="btn-outline-secondary btn">
-          + Add Devices
-        </div>
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="device">Devices</label>
+      <div id="input-cont">
+        <!-- Input container -->
+      </div>
+      <div onclick="addDevices()" class="btn-outline-secondary btn">
+        + Add Devices
+      </div>
 
-        <script>
-          const container = document.getElementById("input-cont");
-          let deviceCount = 0;
-    
-          function addDevices() {
-            let deviceContainer = document.createElement("div");
-            deviceContainer.classList.add("device-container");
-    
-            let dropdown = document.createElement("select");
-            dropdown.classList.add("form-control");
-            dropdown.name = `devices[${deviceCount}][DeviceType]`;
-            let option1 = document.createElement("option");
-            option1.text = "Laptop";
-            let option2 = document.createElement("option");
-            option2.text = "Desktop";
-            let option3 = document.createElement("option");
-            option3.text = "Printer";
-            dropdown.appendChild(option1);
-            dropdown.appendChild(option2);
-            dropdown.appendChild(option3);
-            deviceContainer.appendChild(dropdown);
-    
-            let input = document.createElement("input");
-            input.classList.add("form-control");
-            input.placeholder = "Device ID";
-            input.name = `devices[${deviceCount}][DeviceID]`;
-            deviceContainer.appendChild(input);
-    
-            container.appendChild(deviceContainer);
-    
-            deviceCount++;
-          }
-        </script>
-        
-      </div>
-      <div class="col">
-        <label for="antivirus">Antivirus</label>
-        <br/>
-        <input class="form-control" list="antivirus" name="antivirus">
-          <datalist id="antivirus">
-            <option value="Yes">
-            <option value="No">
-          </datalist>
-      </div>
+      <script>
+        const container = document.getElementById("input-cont");
+        let deviceCount = 0;
+
+        function addDevices() {
+          let deviceContainer = document.createElement("div");
+          deviceContainer.classList.add("device-container");
+
+          let dropdown = document.createElement("select");
+          dropdown.classList.add("form-control");
+          dropdown.name = `devices[${deviceCount}][DeviceType]`;
+          let option1 = document.createElement("option");
+          option1.text = "Laptop";
+          let option2 = document.createElement("option");
+          option2.text = "Desktop";
+          let option3 = document.createElement("option");
+          option3.text = "Printer";
+          dropdown.appendChild(option1);
+          dropdown.appendChild(option2);
+          dropdown.appendChild(option3);
+          deviceContainer.appendChild(dropdown);
+
+          let input = document.createElement("input");
+          input.classList.add("form-control");
+          input.placeholder = "Device ID";
+          input.name = `devices[${deviceCount}][DeviceID]`;
+          deviceContainer.appendChild(input);
+
+          container.appendChild(deviceContainer);
+
+          deviceCount++;
+        }
+      </script>
     </div>
+    <div class="col">
+      <label for="antivirus">Antivirus</label>
+      <br />
+      <input class="form-control" list="antivirus" name="antivirus" />
+      <datalist id="antivirus">
+        <option value="Yes"></option>
+        <option value="No"></option>
+      </datalist>
+    </div>
+  </div>
 
   <div class="form-group mb-4">
     <button type="submit" class="btn btn-primary">Add Employee</button>
   </div>
 </form>
-

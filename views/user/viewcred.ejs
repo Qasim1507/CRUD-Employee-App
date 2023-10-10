@@ -1,49 +1,50 @@
-<div class="d-flex justify-content-between fles-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Credential Info</h1>
+<div
+  class="d-flex justify-content-between fles-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">Credential Info</h1>
 </div>
 
 <div class="col py-3">
-
-    <div class="row">
-      <div class="col">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/cred">Credential Data</a></li>
-            <li class="breadcrumb-item active">Credential Info</li>
-          </ol>
-        </nav>
-      </div>
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/cred">Credential Data</a></li>
+          <li class="breadcrumb-item active">Credential Info</li>
+        </ol>
+      </nav>
     </div>
+  </div>
 </div>
 
 <ul class="list-group">
-
-  <li class="list-group-item"> 
+  <li class="list-group-item">
     <div class="row">
-      <div class="col" style="max-width: 140px"> <b>User ID:</b></div>
+      <div class="col" style="max-width: 140px"><b>User ID:</b></div>
       <div class="col"><%= credentials.userid %></div>
     </div>
   </li>
 
-  <li class="list-group-item"> 
+  <li class="list-group-item">
     <div class="row">
-      <div class="col" style="max-width: 140px"> <b>Password:</b></div>
+      <div class="col" style="max-width: 140px"><b>Password:</b></div>
       <div class="col"><%= credentials.pwd %></div>
     </div>
   </li>
 
-  <li class="list-group-item"> 
+  <li class="list-group-item">
     <div class="row">
-      <div class="col" style="max-width: 140px"> <b>URL:</b></div>
+      <div class="col" style="max-width: 140px"><b>URL:</b></div>
       <div class="col">
-        <a href="<%= credentials.url %>"><%= credentials.url %></a></div>
+        <a href="<%= credentials.url %>"><%= credentials.url %></a>
+      </div>
     </div>
   </li>
 
-  <li class="list-group-item"> 
-      <div class="row">
-        <div class="col" style="max-width: 140px"> <b>Remarks:</b></div>
-        <div class="col"><%= credentials.remarks %></div>
-      </div>
-    </li>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col" style="max-width: 140px"><b>Remarks:</b></div>
+      <div class="col"><%= credentials.remarks %></div>
+    </div>
+  </li>
 </ul>
