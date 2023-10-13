@@ -66,7 +66,7 @@ router.post("/add", fileUpload.single("file"), async (req, res) => {
     res.redirect("/dashboard");
   } catch (error) {
     console.log(error);
-    res.status(500).send("Image upload failed");
+    res.redirect("/dashboard");
   }
 });
 
