@@ -44,7 +44,10 @@ router.post("/add", fileUpload.single("file"), async (req, res) => {
     });
 
     const imageUrl = await uploadImage;
-    const devices = Array.isArray(req.body.devices) ? req.body.devices : [];
+    let devices = [];
+    if (req.body.devices && Array.isArray(req.body.devices)) {
+      devices = req.body.devices;
+    }
 
     const newUser = new User({
       firstName: req.body.firstName,
