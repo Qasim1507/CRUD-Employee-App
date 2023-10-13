@@ -25,28 +25,26 @@ router.delete("/cred/:id", customerController.deleteCredentials);
 const fileUpload = multer();
 
 router.post("/add", fileUpload.single("file"), async (req, res) => {
-  const uploadImage = new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream((error, result) => {
-      if (result) {
-        resolve(result.url);
-      } else {
-        reject(error);
-      }
+  try {
+    if (!req.file) {
+      // Handle the case when no file is uploaded
+      return res.status(400).send("No file uploaded.");
+    }
+
+    const uploadImage = new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream((error, result) => {
+        if (result) {
+          resolve(result.url);
+        } else {
+          reject(error);
+        }
+      });
+
+      streamifier.createReadStream(req.file.buffer).pipe(stream);
     });
 
-    streamifier.createReadStream(req.file.buffer).pipe(stream);
-  });
-
-  try {
     const imageUrl = await uploadImage;
-    const devices = [];
-    for (let i = 0; i < req.body.devices.length; i++) {
-      const newDevice = {
-        DeviceType: req.body.devices[i].DeviceType,
-        DeviceID: req.body.devices[i].DeviceID,
-      };
-      devices.push(newDevice);
-    }
+    const devices = Array.isArray(req.body.devices) ? req.body.devices : [];
 
     const newUser = new User({
       firstName: req.body.firstName,
@@ -65,7 +63,7 @@ router.post("/add", fileUpload.single("file"), async (req, res) => {
 
     res.redirect("/dashboard");
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).send("Image upload failed");
   }
 });
