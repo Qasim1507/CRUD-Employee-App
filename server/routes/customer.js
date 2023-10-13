@@ -40,7 +40,6 @@ router.post("/add", fileUpload.single("file"), async (req, res) => {
         email: req.body.email,
         credentials: req.body.credentials,
         dept: req.body.dept,
-        handover: imageUrl,
         devices: devices,
         antivirus: req.body.antivirus,
       });
