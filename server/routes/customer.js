@@ -26,6 +26,10 @@ const fileUpload = multer();
 
 router.post("/add", fileUpload.single("file"), async (req, res) => {
   try {
+    if (!req.file) {
+      // Handle the case when no file is uploaded
+      console.log("No file uploaded.");
+    }
 
     const uploadImage = new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream((error, result) => {
