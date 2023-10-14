@@ -14,6 +14,14 @@ const CredentialSchema = new Schema({
     type: String,
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
+  expdate: {
+    type: Date,
+    required: true,
+  },
   remarks: {
     type: String,
     required: true,

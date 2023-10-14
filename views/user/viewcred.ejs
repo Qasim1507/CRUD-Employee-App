@@ -43,6 +43,24 @@
 
   <li class="list-group-item">
     <div class="row">
+      <div class="col" style="max-width: 140px"><b>Name:</b></div>
+      <div class="col">
+        <a href="<%= credentials.name%>"><%= credentials.name %></a>
+      </div>
+    </div>
+  </li>
+
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col" style="max-width: 140px"><b>Expiry date:</b></div>
+      <div class="col">
+        <a href="<%= credentials.expdate %>"><%= credentials.expdate %></a>
+      </div>
+    </div>
+  </li>
+
+  <li class="list-group-item">
+    <div class="row">
       <div class="col" style="max-width: 140px"><b>Remarks:</b></div>
       <div class="col"><%= credentials.remarks %></div>
     </div>

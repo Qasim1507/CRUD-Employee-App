@@ -115,6 +115,8 @@ exports.postCredentials = async (req, res) => {
     userid: req.body.userid,
     pwd: req.body.pwd,
     url: req.body.url,
+    name: req.body.name,
+    expdate: req.body.expdate,
     remarks: req.body.remarks,
   });
   try {
