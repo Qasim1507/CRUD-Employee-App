@@ -1,0 +1,98 @@
+<div
+  class="d-flex justify-content-between fles-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">Edit Credentials</h1>
+</div>
+<div class="col py-3">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/cred">Credential Data</a></li>
+          <li class="breadcrumb-item active">Edit Data</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<form action="/editcred/<%=credentials._id %>?_method=PUT" method="POST">
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="userid">User ID</label>
+      <input
+        type="text"
+        class="form-control"
+        id="userid"
+        name="userid"
+        value="<%= credentials.userid %>"
+        placeholder="User ID"
+        
+      />
+    </div>
+
+    <div class="col">
+      <label for="pwd">Password</label>
+      <input
+        type="text"
+        class="form-control"
+        id="pwd"
+        name="pwd"
+        value="<%= credentials.pwd %>"
+        placeholder="Password"
+        
+      />
+    </div>
+  </div>
+
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        value="<%= credentials.name %>"
+        placeholder="Name"
+        
+      />
+    </div>
+
+    <div class="col">
+      <label for="expdate">Expiry Date</label>
+      <input
+        type="date"
+        class="form-control"
+        id="expdate"
+        name="expdate"
+        value="<%= credentials.expdate %>"
+        placeholder="Expiry Date"
+        
+      />
+    </div>
+  </div>
+
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="url">URL</label>
+      <input
+        type="url"
+        class="form-control"
+        id="url"
+        name="url"
+        value="<%= credentials.url %>"
+        placeholder="URL"
+      />
+    </div>
+
+    <div class="form-group mb-4">
+        <label for="remarks">Remarks</label>
+        <textarea class="form-control" name="remarks" id="remarks" cols="30" rows="10" placeholder="<%= credentials.remarks %>"></textarea>
+    </div>
+
+  <div class="form-group mb-4">
+    <button type="submit" class="btn btn-primary">Update Credential</button>
+  </div>
+</form>
+

@@ -4,27 +4,27 @@ const Schema = mongoose.Schema;
 const CredentialSchema = new Schema({
   userid: {
     type: String,
-    required: true,
+    required: false,
   },
   pwd: {
     type: String,
-    required: true,
+    required: false,
   },
   url: {
     type: String,
-    required: true,
+    required: false,
   },
   name: {
     type: String,
-    required: true,
+    required: false,
   },
   expdate: {
     type: Date,
-    required: true,
+    required: false,
   },
   remarks: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 

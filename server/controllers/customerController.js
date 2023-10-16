@@ -256,10 +256,12 @@ exports.editemp = async (req, res) => {
       credentials: req.body.credentials,
       dept: req.body.dept,
       handover: req.body.handover,
+      devices: req.body.devices,
+      antivirus: req.body.antivirus,
     });
     await res.redirect(`/edit/${req.params.id}`);
 
-    //console.log('redirected');
+    console.log("redirected");
   } catch (error) {
     console.log(error);
   }
@@ -294,5 +296,20 @@ exports.deleteCredentials = async (req, res) => {
     res.redirect("/cred");
   } catch (error) {
     console.log(error);
+  }
+};
+
+exports.editcredentials = async (req, res) => {
+  try {
+    const credentials = await Credential.findById(req.params.id);
+    if (!credentials) {
+      // Handle case where credentials with the specified ID is not found
+      return res.status(404).json({ error: "Credentials not found" });
+    }
+
+    res.render("user/editcred", { credentials: credentials });
+  } catch (error) {
+    console.error(error);
+    // Handle error appropriately
   }
 };
