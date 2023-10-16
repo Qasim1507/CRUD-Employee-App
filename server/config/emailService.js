@@ -5,15 +5,15 @@ const Credential = require('../models/Credentialdata');
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'qasim.fakharuddin2021@vitstudent.ac.in',
-    pass: 'Qasim102938/',
+    user: 'enter mail',
+    pass: 'Enter pswd',
   }
 });
 
 async function sendEmailNotification(record) {
   const mailOptions = {
     from: 'YOUR_EMAIL_ADDRESS',
-    to: 'nalawalaq@gmail.com',
+    to: 'reciever',
     subject: 'Expiry Date Reminder',
     text: `The expiry date of ${record.name} is approaching. Please take necessary action.`,
   };
