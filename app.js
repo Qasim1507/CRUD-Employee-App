@@ -9,8 +9,10 @@ const methodoverrride = require("method-override");
 const fileRoute = require("./server/routes/customer");
 const cloudinary = require("cloudinary").v2;
 const { auth } = require("express-openid-connect");
+const axios = require("axios").default;
+const { requiresAuth } = require('express-openid-connect');
 // const { sendEmailNotification } = require('./server/config/emailService');
-// const Credential = require('./server/models/Credentialdata'); 
+// const Credential = require('./server/models/Credentialdata');
 // const schedule = require('node-schedule');
 // const moment = require('moment');
 
@@ -77,20 +79,57 @@ cloudinary.config({
   cloud_secret: process.env.CLOUDINARY_SECRET,
 });
 
+app.listen(port, () => {
+  console.log(`App listening on port ${port}`);
+});
+
+app.get('/callback', requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user));
+});
+
 // Handle 404
 app.get("*", (req, res) => {
   res.status(404).render("404");
 });
 
-//Auht0
-// app.get('/', (req, res) => {
-//   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-// });
+async function getUserRolesFromAuth0(userId) {
+  const options = {
+    method: "GET",
+    url: `https://samcomelectronics.us.auth0.com/api/v2/users/${userId}/roles`,
+    headers: {
+      Authorization: "Bearer " + process.env.AUTH0_TOKEN,
+    },
+  };
 
-// app.use((req, res, next) => {
-//   res.locals.isAuthenticated = req.oidc.isAuthenticated();
-//   next();
-// });
+  try {
+    const response = await axios.request(options);
+    if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+      const roles = response.data.map((role) => role.name);
+      console.log(roles);
+      return roles;
+    } else {
+      console.log("User has no roles");
+      return [];
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+getUserRolesFromAuth0('auth0|65094fd970d3cfe7ec80d964')
+
+app.get("/", async (req, res) => {
+ try {
+    const userId = req.oidc.user.sub;
+    const roles = await getUserRolesFromAuth0(userId);
+    res.render("index", { roles });
+ } catch (error) {
+    console.error(error);
+    res.status(500).send("Error fetching user roles");
+ }
+});
+
 
 // schedule.scheduleJob('58 11 * * *', async () => {
 //   const data = await Credential.find();
@@ -109,6 +148,3 @@ app.get("*", (req, res) => {
 //   });
 // });
 
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
-});
