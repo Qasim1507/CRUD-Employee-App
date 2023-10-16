@@ -9,6 +9,10 @@ const methodoverrride = require("method-override");
 const fileRoute = require("./server/routes/customer");
 const cloudinary = require("cloudinary").v2;
 const { auth } = require("express-openid-connect");
+// const { sendEmailNotification } = require('./server/config/emailService');
+// const Credential = require('./server/models/Credentialdata'); 
+// const schedule = require('node-schedule');
+// const moment = require('moment');
 
 const app = express();
 const port = 5100 || process.env.PORT;
@@ -86,6 +90,23 @@ app.get("*", (req, res) => {
 // app.use((req, res, next) => {
 //   res.locals.isAuthenticated = req.oidc.isAuthenticated();
 //   next();
+// });
+
+// schedule.scheduleJob('58 11 * * *', async () => {
+//   const data = await Credential.find();
+//   const expiryThresholdInDays = 7;
+
+//   const currentDate = moment().startOf('day');
+//   const recordsToNotify = data.filter(record => {
+//     const expiryDate = moment(record.expdate).startOf('day');
+//     const daysUntilExpiry = expiryDate.diff(currentDate, 'days');
+
+//     return daysUntilExpiry <= expiryThresholdInDays;
+//   });
+
+//   recordsToNotify.forEach(record => {
+//     sendEmailNotification(record);
+//   });
 // });
 
 app.listen(port, () => {
