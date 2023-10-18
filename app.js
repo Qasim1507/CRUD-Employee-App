@@ -9,8 +9,8 @@ const methodoverrride = require("method-override");
 const fileRoute = require("./server/routes/customer");
 const cloudinary = require("cloudinary").v2;
 const { auth } = require("express-openid-connect");
-const axios = require("axios").default;
-const { requiresAuth } = require('express-openid-connect');
+const axios = require('axios');
+
 // const { sendEmailNotification } = require('./server/config/emailService');
 // const Credential = require('./server/models/Credentialdata');
 // const schedule = require('node-schedule');
@@ -58,6 +58,7 @@ app.use((req, res, next) => {
   next();
 });
 
+
 app.use(expressLayout);
 app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
@@ -77,19 +78,6 @@ cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
   cloud_api: process.env.CLOUDINARY_API_KEY,
   cloud_secret: process.env.CLOUDINARY_SECRET,
-});
-
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
-});
-
-app.get('/callback', requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user));
-});
-
-// Handle 404
-app.get("*", (req, res) => {
-  res.status(404).render("404");
 });
 
 async function getUserRolesFromAuth0(userId) {
@@ -117,19 +105,27 @@ async function getUserRolesFromAuth0(userId) {
   }
 }
 
-getUserRolesFromAuth0('auth0|65094fd970d3cfe7ec80d964')
-
-app.get("/", async (req, res) => {
- try {
-    const userId = req.oidc.user.sub;
-    const roles = await getUserRolesFromAuth0(userId);
-    res.render("index", { roles });
- } catch (error) {
-    console.error(error);
-    res.status(500).send("Error fetching user roles");
- }
+app.use(async (req, res, next) => {
+  try {
+      const userId = req.oidc.user.sub;
+      const roles = await getUserRolesFromAuth0(userId);
+      res.locals.roles = roles;
+      res.render('index', { roles: roles });
+      next();
+  } catch (error) {
+      next(error); // Pass any errors to the error-handling middleware
+  }
 });
 
+
+app.listen(port, () => {
+  console.log(`App listening on port ${port}`);
+});
+
+// Handle 404
+app.get("*", (req, res) => {
+  res.status(404).render("404");
+});
 
 // schedule.scheduleJob('58 11 * * *', async () => {
 //   const data = await Credential.find();
