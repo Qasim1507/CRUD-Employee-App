@@ -8,7 +8,7 @@ const connectDB = require("./server/config/db");
 const methodoverrride = require("method-override");
 const fileRoute = require("./server/routes/customer");
 const cloudinary = require("cloudinary").v2;
-const { auth } = require("express-openid-connect");
+const { auth,requiresAuth } = require("express-openid-connect");
 const axios = require('axios');
 
 // const { sendEmailNotification } = require('./server/config/emailService');
@@ -63,6 +63,8 @@ app.use(expressLayout);
 app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
 
+
+
 app.use("/", require("./server/routes/customer"));
 
 app.use(express.json());
@@ -78,43 +80,6 @@ cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
   cloud_api: process.env.CLOUDINARY_API_KEY,
   cloud_secret: process.env.CLOUDINARY_SECRET,
-});
-
-async function getUserRolesFromAuth0(userId) {
-  const options = {
-    method: "GET",
-    url: `https://samcomelectronics.us.auth0.com/api/v2/users/${userId}/roles`,
-    headers: {
-      Authorization: "Bearer " + process.env.AUTH0_TOKEN,
-    },
-  };
-
-  try {
-    const response = await axios.request(options);
-    if (response.data && Array.isArray(response.data) && response.data.length > 0) {
-      const roles = response.data.map((role) => role.name);
-      console.log(roles);
-      return roles;
-    } else {
-      console.log("User has no roles");
-      return [];
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-}
-
-app.use(async (req, res, next) => {
-  try {
-      const userId = req.oidc.user.sub;
-      const roles = await getUserRolesFromAuth0(userId);
-      res.locals.roles = roles;
-      res.render('index', { roles: roles });
-      next();
-  } catch (error) {
-      next(error); // Pass any errors to the error-handling middleware
-  }
 });
 
 

@@ -7,6 +7,15 @@ const router = express.Router();
 const cloudinary = require("cloudinary").v2;
 const streamifier = require("streamifier");
 
+exports.adminLogin = async (req, res) => {
+  const locals = {
+    title: "Add New Credential - NodeJs",
+    description: "Free NodeJs User Management System",
+  };
+
+  res.render("loginadmin", locals);
+};
+
 exports.login = async (req, res) => {
   const locals = {
     title: "Login",
