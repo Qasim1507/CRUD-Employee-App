@@ -322,3 +322,35 @@ exports.editcredentials = async (req, res) => {
     // Handle error appropriately
   }
 };
+
+/**
+ * Get /
+ * Search Customer Data 
+*/
+exports.searchUsers = async (req, res) => {
+
+  const locals = {
+    title: "Search Customer Data",
+    description: "Free NodeJs User Management System",
+  };
+
+  try {
+    let searchTerm = req.body.searchTerm;
+    const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
+
+    const users = await User.find({
+      $or: [
+        { dept: { $regex: new RegExp(searchNoSpecialChar, "i") }},
+      ]
+    });
+
+    res.render("search", {
+      users,
+      locals
+    })
+    
+  } catch (error) {
+    console.log(error);
+  }
+
+}

@@ -21,6 +21,7 @@ router.get("/editcred/:id", customerController.editcredentials);
 //router.put("/edit/:id", customerController.editemp);
 router.delete("/edit/:id", customerController.deleteUser);
 router.delete("/cred/:id", customerController.deleteCredentials);
+router.post('/search', customerController.searchUsers);
 
 // customercontroller.js
 
