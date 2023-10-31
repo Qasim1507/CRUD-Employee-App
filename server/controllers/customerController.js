@@ -39,7 +39,15 @@ exports.login = async (req, res) => {
  */
 exports.homepage = async (req, res) => {
   //const messages = await req.consumeFlash('info');
+  const isAuthenticated = req.oidc.isAuthenticated();
+  let userInfo = null; // Initialize userRole as null
 
+  if (isAuthenticated) {
+    // If the user is authenticated, check if 'email' exists in the user profile
+    if (req.oidc.user && req.oidc.user.email) {
+      userInfo = req.oidc.user.email;
+    }
+  }
   const locals = {
     title: "NODE JS",
     description: "NODEJS TRIAL",
@@ -54,12 +62,14 @@ exports.homepage = async (req, res) => {
       .limit(perPage)
       .exec();
     const count = await User.count();
-
+    
     res.render("index", {
       locals,
       users,
       current: page,
       pages: Math.ceil(count / perPage),
+      isAuthenticated, // Pass the isAuthenticated flag to your view
+      userInfo,
     });
   } catch (error) {
     console.log(error);
@@ -69,6 +79,17 @@ exports.homepage = async (req, res) => {
 };
 
 exports.credentialdata = async (req, res) => {
+
+  const isAuthenticated = req.oidc.isAuthenticated();
+  let userInfo = null; // Initialize userRole as null
+
+  if (isAuthenticated) {
+    // If the user is authenticated, check if 'email' exists in the user profile
+    if (req.oidc.user && req.oidc.user.email) {
+      userInfo = req.oidc.user.email;
+    }
+  }
+
   const locals = {
     title: "NODE JS",
     description: "NODEJS TRIAL",
@@ -91,6 +112,7 @@ exports.credentialdata = async (req, res) => {
       credentials,
       current: page,
       pages: Math.ceil(count / perPage),
+      userInfo,
     });
   } catch (error) {
     console.log(error);

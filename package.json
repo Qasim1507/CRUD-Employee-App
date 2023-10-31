@@ -12,7 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@auth0/auth0-spa-js": "github:auth0/auth0-spa-js",
     "auth0": "^4.0.1",
+    "auth0-spa-js": "^1.6.5",
     "axios": "^1.5.1",
     "cloudinary": "^1.40.0",
     "connect-flash": "^0.1.1",
